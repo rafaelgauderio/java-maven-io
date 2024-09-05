@@ -1,9 +1,6 @@
 package com.rafaeldeluca;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class ProgramIO {
@@ -33,18 +30,43 @@ public class ProgramIO {
                     System.out.println("File create with sucess!");
                 }
             }
-            final OutputStream outputStream = new FileOutputStream(file);
-            String content = "Initial file inside data";
-            outputStream.write(content.getBytes("UTF-8"));
-            outputStream.close();
-            System.out.println("file data write with success!");
+            if (folder.exists() && file.exists()) {
+                final OutputStream outputStream = new FileOutputStream(file);
+                String content = "Initial file inside data";
+                content = content.concat("\nSecond line file content");
+                outputStream.write(content.getBytes("UTF-8"));
+                outputStream.close();
+                System.out.println("file data write with success!");
+            }
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
+    }
 
+    private void readFile() {
+        // 1 byte = 8 bits
+        // 1 char UFT-8  = 1 byte
+        // 1 char UFT-16 = 2 bytes
+
+        final InputStream inputStream;
+        try {
+            inputStream = new FileInputStream(FILE);
+
+            int fileContent;
+            while ((fileContent = inputStream.read()) != -1) {
+                System.out.print((char)fileContent);
+            }
+
+        } catch (IOException ioexception) {
+            ioexception.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
-        new ProgramIO().writeFile();
+        ProgramIO programIO = new ProgramIO();
+        programIO.writeFile();
+        programIO.readFile();
+
+
     }
 }
