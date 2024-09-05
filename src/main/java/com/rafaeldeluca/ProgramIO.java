@@ -31,6 +31,7 @@ public class ProgramIO {
                 }
             }
             if (folder.exists() && file.exists()) {
+                // outputStream usa fluxo de bytes
                 final OutputStream outputStream = new FileOutputStream(file);
                 String content = "Initial file inside data";
                 content = content.concat("\nSecond line file content");
@@ -51,6 +52,7 @@ public class ProgramIO {
         //InputStream inputStream = null;
         try (final InputStream inputStream = new FileInputStream(FILE)) {
             int fileContent;
+            System.out.println("\nReading file with FileInputStream");
             while ((fileContent = inputStream.read()) != -1) {
                 System.out.print((char) fileContent);
             }
@@ -59,9 +61,23 @@ public class ProgramIO {
         }
     }
 
+    private void readFileUsingFileReader() {
+        try (final FileReader fileReader = new FileReader(FILE)) {
+            int fileContent = fileReader.read();
+            System.out.println("\n\nReading file with FileReader");
+            do {
+                System.out.print((char)(fileContent));
+                fileContent = fileReader.read();
+            } while (fileContent != -1);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         ProgramIO programIO = new ProgramIO();
         programIO.writeFile();
         programIO.readFile();
+        programIO.readFileUsingFileReader();
     }
 }
