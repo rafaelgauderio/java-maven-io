@@ -48,17 +48,25 @@ public class ProgramIO {
         // 1 char UFT-8  = 1 byte
         // 1 char UFT-16 = 2 bytes
 
-        final InputStream inputStream;
+        InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(FILE);
 
             int fileContent;
             while ((fileContent = inputStream.read()) != -1) {
-                System.out.print((char)fileContent);
+                System.out.print((char) fileContent);
             }
 
         } catch (IOException ioexception) {
             ioexception.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
