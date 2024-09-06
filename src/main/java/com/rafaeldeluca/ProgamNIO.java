@@ -23,6 +23,8 @@ public class ProgamNIO {
                 }
             }
             writeFileNIO();
+            System.out.println("\nReading file with java.nio.file");
+            readFIleNIO();
         } catch (IOException exception) {
             exception.printStackTrace();
         }
@@ -39,8 +41,27 @@ public class ProgamNIO {
         System.out.println("java.nio.file data write with success!");
     }
 
+    private void readFIleNIO() throws IOException {
+        final RandomAccessFile randomAccessFile = new RandomAccessFile(FILE, "r");
+        final FileChannel fileChannel = randomAccessFile.getChannel();
+        final long fileChannelSize = fileChannel.size();
+        // converte long to integer and store on a ByteBuffer
+        final ByteBuffer byteBuffer = ByteBuffer.allocate(Math.toIntExact(fileChannelSize));
+
+        fileChannel.read(byteBuffer);
+        // reverse to the initial of the file
+        byteBuffer.flip();
+       for(int i=0; i < fileChannelSize; i++) {
+           System.out.print((char)byteBuffer.get());
+       }
+       fileChannel.close();
+       randomAccessFile.close();
+
+    }
+
     public static void main(String[] args) {
         ProgamNIO progamNIO = new ProgamNIO();
+
 
     }
 }
