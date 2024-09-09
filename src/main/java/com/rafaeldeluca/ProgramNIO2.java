@@ -21,6 +21,8 @@ public class ProgramNIO2 {
                 }
             }
             writeFileUsingNIO2();
+            System.out.println("\nReading fine using nio2");
+            readFileUsingNIO2();
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
@@ -36,6 +38,17 @@ public class ProgramNIO2 {
         Files.writeString(path, nio2Content);
         System.out.println("java.nio.file nio2 data write with success!");
 
+    }
+
+    private void readFileUsingNIO2 () throws IOException  {
+
+        final Path path = Paths.get(FILE);
+        // print a list of streams - print as a array
+        System.out.println(Files.readAllLines(path));
+        System.out.println("\n");
+        // return stream using consumer - lazzy - more performatic
+        Files.readAllLines(path).
+                forEach(System.out::println);
     }
 
     public static void main(String[] args) {
