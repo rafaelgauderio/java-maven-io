@@ -24,7 +24,7 @@ public class ProgamNIO {
             }
             writeFileNIO();
             System.out.println("\nReading file with java.nio.file");
-            readFIleNIO();
+            readFileNIO();
         } catch (IOException exception) {
             exception.printStackTrace();
         }
@@ -41,7 +41,7 @@ public class ProgamNIO {
         System.out.println("java.nio.file data write with success!");
     }
 
-    private void readFIleNIO() throws IOException {
+    private void readFileNIO() throws IOException {
         final RandomAccessFile randomAccessFile = new RandomAccessFile(FILE, "r");
         final FileChannel fileChannel = randomAccessFile.getChannel();
         final long fileChannelSize = fileChannel.size();
